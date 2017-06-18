@@ -1,7 +1,8 @@
 from data.GetGeneralData import GetGeneralData
-
+from NeuralNet.network import runNeuralNet
 
 X_train,X_test,Y_train,Y_test = GetGeneralData()
+runNeuralNet(X_train,X_test,Y_train,Y_test)
 
-print(X_test)
+
 

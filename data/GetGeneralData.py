@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from imblearn.over_sampling import RandomOverSampler
 from sklearn.cross_validation import train_test_split
 
@@ -18,7 +17,7 @@ def __overSampleData(Xvalues,Yvalues):
 def GetGeneralData():
     Xvalues,Yvalues=__getDataFromFile('./data/dataset/zoo.csv')
     XResampled,YResampled = __overSampleData(Xvalues,Yvalues)
-    X_train,X_test,Y_train,Y_test = train_test_split(XResampled, YResampled)
+    X_train,X_test,Y_train,Y_test = train_test_split(XResampled, YResampled,test_size=0.20,random_state=42)
     return X_train,X_test,Y_train,Y_test
 
 

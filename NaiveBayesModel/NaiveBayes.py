@@ -30,8 +30,8 @@ def NaiveBayes(X_train,Y_train):
     bnb = BernoulliNB()
     listbnb = score_seed(bnb,10,listbnb,"BNB completed")
 
-    list_model = ["Gausian NB", "Multinomial NB", "Bernoulli NB"]
     list_pref  = [np.mean(listgnb),np.mean(listmnb),np.mean(listbnb)]
+
     return 
 
 def plot_correlation_map( df ):

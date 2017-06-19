@@ -9,7 +9,7 @@ def _SvmKernelTest():
     #_SvmGaussian()
     #_SvmPolinomial()
     #_SvmSigmoidal()
-    c, gamma = getParametersGaussian()
+    c, gamma = _getParametersGaussian()
 
 def _SvmLinear():
     #hiperplanos

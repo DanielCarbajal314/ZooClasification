@@ -9,3 +9,4 @@ runNaiveBayes(X_train,X_test,Y_train,Y_test)
 
 SvmMain()
 
+runKNN(X_train,X_test,Y_train,Y_test)

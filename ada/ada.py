@@ -5,6 +5,7 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from data.GetGeneralData import GetGeneralData
+from sklearn.grid_search import GridSearchCV
 
 def getLabeledResult(predictions):
     animalTypeNames = []
@@ -45,32 +46,23 @@ def trainRFTuning(X_train, Y_train, X_test, Y_test):
     print ("Exactitud de RandomForest en conjunto de validación    :", rfModel.score(X_test, y_test))
 return rfModel
 
-def trainAdaTuning(X_train, Y_train, X_test, Y_test):
-    n_estimators=600
-    min_samples_leaf_grid = np.linspace(1,10,10).astype(int)
+def trainAdaboost(X_train, Y_train):
+    param_grid = {"base_estimator__criterion" : ["gini", "entropy"],
+              "base_estimator__splitter" :   ["best", "random"],
+              "n_estimators": [1, 2, 50, 150, 200]
+             }
 
-    best_score = 0
-    best_min_samples_leaf = None
+    dtc = DecisionTreeClassifier(random_state = 11, max_features = "auto", class_weight = "auto",max_depth = None)
 
-    for min_samples_leaf in min_samples_leaf_grid:
-    base_estimator = DecisionTreeClassifier(min_samples_leaf=min_samples_leaf, random_state=0)
-    adaModel = AdaBoostClassifier(base_estimator=base_estimator, n_estimators=n_estimators, random_state=0)
-    adaModel.fit(X_train, y_train)
+    adaboostModel = AdaBoostClassifier(base_estimator = dtc)
 
-    score_test = adaModel.score(X_test, y_test)
+    grid_search_adaboost = GridSearchCV(ABC, param_grid=param_grid, scoring = 'roc_auc')
 
-    if score_test > best_score:
-        best_score = score_test
-        best_min_samples_leaf = min_samples_leaf
-        best_adaModel = adaModel
+    estimator=grid_search_adaboost.estimator
 
-    adaModel = best_adaModel
-    adaModel.fit(X_train, y_train)
+    adaboostModel = estimator.fit(X_train, Y_train)
 
-    print ("Mejor valor de min_samples_leaf :", best_min_samples_leaf)
-    print ("Exactitud de AdaBoost en conjunto de entrenamiento :", adaModel.score(X_train, y_train))
-    print ("Exactitud de AdaBoost en conjunto de validación    :", best_score)
-return adaModel
+return adaboostModel
 
 def test(tested_model, X_test, Y_test):
     predictions = tested_model.predict(X_test)
@@ -82,5 +74,5 @@ def test(tested_model, X_test, Y_test):
 def runAdaRF(X_train, X_test, Y_train, Y_test):
     rfModel = trainRFTuning(X_train, Y_train, X_test, Y_test)
     test(rfModel, X_test, Y_test)
-    adaModel = trainAdaTuning(X_train, Y_train, X_test, Y_test)
-    test(adaModel, X_test, Y_test)
+    adaboostModel = trainAdaboost(X_train, Y_train)
+    test(adaboostModel, X_test, Y_test)

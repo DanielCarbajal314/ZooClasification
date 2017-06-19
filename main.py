@@ -3,6 +3,7 @@ from NaiveBayes.naivebayes import runNaiveBayes
 from NeuralNet.network import runNeuralNet
 from svm.svm import runSVM
 from knn.knn import runKNN
+from ada.ada import runAdaRF
 
 X_train,X_test,Y_train,Y_test = GetGeneralData()
 print('=======NeuralNet=====')
@@ -14,4 +15,4 @@ runKNN(X_train,X_test,Y_train,Y_test)
 print('=======SVM=====')
 runSVM(X_train,X_test,Y_train,Y_test)
 print('=======Adaboost-RandomForest=====')
-runAdaRF()
+runAdaRF(X_train,X_test,Y_train,Y_test)

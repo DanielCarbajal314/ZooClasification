@@ -4,8 +4,10 @@ import matplotlib.pyplot as plt
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
-from data.GetGeneralData import GetGeneralData
 from sklearn.grid_search import GridSearchCV
+from sklearn.metrics import classification_report, confusion_matrix
+
+from data.GetAnimalType import GetAnimalType
 
 def getLabeledResult(predictions):
     animalTypeNames = []
@@ -39,12 +41,12 @@ def trainRFTuning(X_train, Y_train, X_test, Y_test):
             best_rfModel = rfModel
 
     rfModel = best_rfModel
-    rfModel.fit(X_train, y_train)
+    rfModel.fit(X_train, Y_train)
 
     print ("Mejor valor de n_estimators :", best_n_estimators)
-    print ("Exactitud de RandomForest en conjunto de entrenamiento :", rfModel.score(X_train, y_train))
-    print ("Exactitud de RandomForest en conjunto de validación    :", rfModel.score(X_test, y_test))
-return rfModel
+    print ("Exactitud de RandomForest en conjunto de entrenamiento :", rfModel.score(X_train, Y_train))
+    print ("Validacion", rfModel.score(X_test, Y_test))
+    return rfModel
 
 def trainAdaboost(X_train, Y_train):
     param_grid = {"base_estimator__criterion" : ["gini", "entropy"],
@@ -56,13 +58,13 @@ def trainAdaboost(X_train, Y_train):
 
     adaboostModel = AdaBoostClassifier(base_estimator = dtc)
 
-    grid_search_adaboost = GridSearchCV(ABC, param_grid=param_grid, scoring = 'roc_auc')
+    grid_search_adaboost = GridSearchCV(adaboostModel, param_grid=param_grid, scoring = 'roc_auc')
 
     estimator=grid_search_adaboost.estimator
 
     adaboostModel = estimator.fit(X_train, Y_train)
 
-return adaboostModel
+    return adaboostModel
 
 def test(tested_model, X_test, Y_test):
     predictions = tested_model.predict(X_test)
@@ -72,7 +74,9 @@ def test(tested_model, X_test, Y_test):
     print(classification_report(testNames, predictedNames))
 
 def runAdaRF(X_train, X_test, Y_train, Y_test):
+    print('==RandomForest==')
     rfModel = trainRFTuning(X_train, Y_train, X_test, Y_test)
     test(rfModel, X_test, Y_test)
+    print('==Adaboost==')
     adaboostModel = trainAdaboost(X_train, Y_train)
     test(adaboostModel, X_test, Y_test)

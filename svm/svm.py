@@ -1,4 +1,3 @@
-from data.GetGeneralData import GetGeneralData
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report,confusion_matrix
 from data.GetAnimalType import GetAnimalType
@@ -7,9 +6,11 @@ import numpy as np
 NUMBER_OF_CLASES = 7
 
 def runSVM(X_train,X_test,Y_train,Y_test):
+    #Se seleccionó svm con kernel gaussiano
     _testSvmGaussian(X_train,X_test,Y_train,Y_test)
 
 def _testSvmGaussian(X_train,X_test,Y_train,Y_test):
+    #Se elige los mejores parámetros C y Gamma
     Cs = np.logspace(-2, 2, 9)  # ~ [0.01, 0.03, 0.1, ..., 100]
     gammas = np.logspace(-4, 4, 9)  # [0.0001, 0.001, ..., 10000]
 
@@ -28,11 +29,10 @@ def _testSvmGaussian(X_train,X_test,Y_train,Y_test):
                 mejor_modelo = model
 
     predictions = mejor_modelo.predict(X_test)
+    #Se imprime un resumen de la predicción.
     _testSVM(predictions=predictions,Y_test=Y_test)
     #print('Mejor valor de C: %0.4f' % mejor_modelo.get_params()['C'])
     #print('Mejor valor de gamma: %0.4f' % mejor_modelo.get_params()['gamma'])
-    #print('Exactitud en el conjunto de entrenamiento: %0.4f' % mejor_modelo.score(X_test, Y_test))
-    #print('Exactitud en el conjunto de validación: %0.4f' % mejor_modelo.score(X_train, Y_train))
     return Cs,gammas
 
 def _testSVM(predictions,Y_test):

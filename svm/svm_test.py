@@ -1,5 +1,7 @@
 from data.GetGeneralData import GetGeneralData
 from sklearn.svm import SVC
+from sklearn import metrics
+
 import numpy as np
 
 X_train, X_test, Y_train, Y_test = GetGeneralData()
@@ -9,7 +11,7 @@ def _SvmKernelTest():
     #_SvmGaussian()
     #_SvmPolinomial()
     #_SvmSigmoidal()
-    c, gamma = getParametersGaussian()
+    c, gamma = _getParametersGaussian()
 
 def _SvmLinear():
     #hiperplanos

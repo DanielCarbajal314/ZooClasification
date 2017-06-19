@@ -64,3 +64,4 @@ def _getParametersGaussian():
     print('Mejor valor de gamma: %0.4f' % mejor_modelo.get_params()['gamma'])
     print('Exactitud en el conjunto de entrenamiento: %0.4f' % mejor_modelo.score(X_test, Y_test))
     print('Exactitud en el conjunto de validación: %0.4f' % mejor_modelo.score(X_train, Y_train))
+    return Cs,gammas

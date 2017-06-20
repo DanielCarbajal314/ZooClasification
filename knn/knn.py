@@ -11,8 +11,8 @@ def getLabeledResult(predictions):
         animalTypeNames.append(animalTypeName)
     return animalTypeNames
 
-def trainKNN(X_train, Y_train):
-    knn = KNeighborsClassifier(n_neighbors = 1)
+def trainKNN(X_train, Y_train, k):
+    knn = KNeighborsClassifier(n_neighbors = k)
     knn.fit(X_train, Y_train)
     return knn
 
@@ -23,6 +23,6 @@ def testKNN(knnModel, X_test, Y_test):
     print(confusion_matrix(testNames, predictedNames))
     print(classification_report(testNames, predictedNames))
 
-def runKNN(X_train, X_test, Y_train, Y_test):
-    knnModel = trainKNN(X_train, Y_train)
+def runKNN(X_train, X_test, Y_train, Y_test, k = 1):
+    knnModel = trainKNN(X_train, Y_train, k)
     testKNN(knnModel, X_test, Y_test)

@@ -13,7 +13,7 @@ def __transformToNeuralNetResultVector(YResultData):
     return transformedResult
 
 def __trainNetwork(X_train,Y_train):
-    neuralNetwork = neuralNetworkClasifierConstructor(solver='lbfgs', alpha=1e-5,hidden_layer_sizes=(11), random_state=1)
+    neuralNetwork = neuralNetworkClasifierConstructor(solver='lbfgs', alpha=1e-5,hidden_layer_sizes=(11,11), random_state=1)
     AdaptedToNeuralNet_Y_train = __transformToNeuralNetResultVector(Y_train)
     neuralNetwork.fit(X_train,AdaptedToNeuralNet_Y_train)
     return neuralNetwork

@@ -9,18 +9,18 @@ from ada.ada import runAdaRF
 DescribeData()
 
 X_train,X_test,Y_train,Y_test = GetGeneralData()
-print('=======NeuralNet=====')
-runNeuralNet(X_train,X_test,Y_train,Y_test)
+#print('=======NeuralNet=====')
+#runNeuralNet(X_train,X_test,Y_train,Y_test)
 print('=======NaiveBayes=====')
 runNaiveBayes(X_train,X_test,Y_train,Y_test)
 
-print('=======KNN=====')
-for i in range(1, int(len(Y_test)**(.5)) + 1):
-	print("K = " + str(i))
-	runKNN(X_train,X_test,Y_train,Y_test, i)
-	print("")
+#print('=======KNN=====')
+#for i in range(1, int(len(Y_test)**(.5)) + 1):
+#	print("K = " + str(i))
+#	runKNN(X_train,X_test,Y_train,Y_test, i)
+#	print("")
 
-print('=======SVM=====')
-runSVM(X_train,X_test,Y_train,Y_test)
-print('=======Adaboost-RandomForest=====')
-runAdaRF(X_train,X_test,Y_train,Y_test)
+#print('=======SVM=====')
+#runSVM(X_train,X_test,Y_train,Y_test)
+#print('=======Adaboost-RandomForest=====')
+#runAdaRF(X_train,X_test,Y_train,Y_test)

@@ -16,8 +16,8 @@ def __overSampleData(Xvalues,Yvalues):
 
 def GetGeneralData():
     Xvalues,Yvalues=__getDataFromFile('./data/dataset/zoo.csv')
-    XResampled,YResampled = __overSampleData(Xvalues,Yvalues)
-    X_train,X_test,Y_train,Y_test = train_test_split(XResampled, YResampled,test_size=0.20,random_state=42)
-    return X_train,X_test,Y_train,Y_test
+    X_train,X_test,Y_train,Y_test = train_test_split(Xvalues, Yvalues,test_size=0.20,random_state=42)
+    XResampled,YResampled = __overSampleData(X_train,Y_train)
+    return XResampled,X_test,YResampled,Y_test
 
 

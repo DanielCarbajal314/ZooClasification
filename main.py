@@ -6,11 +6,11 @@ from svm.svm import runSVM
 from knn.knn import runKNN
 from ada.ada import runAdaRF
 
-DescribeData()
+#DescribeData()
 
 X_train,X_test,Y_train,Y_test = GetGeneralData()
 print('=======NeuralNet=====')
-runNeuralNet(X_train,X_test,Y_train,Y_test)
+#runNeuralNet(X_train,X_test,Y_train,Y_test)
 print('=======NaiveBayes=====')
 runNaiveBayes(X_train,X_test,Y_train,Y_test)
 

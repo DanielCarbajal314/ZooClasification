@@ -13,7 +13,8 @@ from collections import defaultdict
 
 #DescribeData()
 
-X_train,X_test,Y_train,Y_test = GetGeneralData()
+#X_train,X_test,Y_train,Y_test = GetGeneralData()
+X_train,X_test,X_validation,Y_train,Y_test,Y_validation = GetGeneralData()
 
 print('=======NeuralNet=====')
 #runNeuralNet(X_train,X_test,Y_train,Y_test)
@@ -27,6 +28,6 @@ print('=======KNN=====')
 #	print("")
 
 print('=======SVM=====')
-#runSVM(X_train,X_test,Y_train,Y_test)
+runSVM(X_train,X_test,X_validation,Y_train,Y_test,Y_validation)
 print('=======Adaboost-RandomForest=====')
 #runAdaRF(X_train,X_test,Y_train,Y_test)

@@ -1,4 +1,5 @@
 animaDictionary = {
+    0:'UnKnown',
     1:'Mammal',
     2:'Bird',
     3:'Reptile',

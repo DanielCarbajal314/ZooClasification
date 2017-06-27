@@ -6,7 +6,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import classification_report, confusion_matrix
-
+from sklearn.feature_selection import SelectKBest
+from sklearn.pipeline import Pipeline
 from data.GetAnimalType import GetAnimalType
 
 def getLabeledResult(predictions):
@@ -57,14 +58,12 @@ def trainAdaboost(X_train, Y_train):
     dtc = DecisionTreeClassifier(random_state = 11, max_features = "auto", class_weight = "auto",max_depth = None)
 
     adaboostModel = AdaBoostClassifier(base_estimator = dtc)
+    
+    grid_search_adaboost = GridSearchCV(adaboostModel, param_grid=param_grid, scoring = 'precision_macro')
 
-    grid_search_adaboost = GridSearchCV(adaboostModel, param_grid=param_grid, scoring = 'roc_auc')
+    grid_search_adaboost.estimator.fit(X_train,Y_train)
 
-    estimator=grid_search_adaboost.estimator
-
-    adaboostModel = estimator.fit(X_train, Y_train)
-
-    return adaboostModel
+    return grid_search_adaboost.estimator
 
 def test(tested_model, X_test, Y_test):
     predictions = tested_model.predict(X_test)
@@ -78,5 +77,5 @@ def runAdaRF(X_train,X_test,X_validation,Y_train,Y_test,Y_validation):
     rfModel = trainRFTuning(X_train, Y_train, X_validation, Y_validation)
     test(rfModel, X_test, Y_test)
     print('==Adaboost==')
-    adaboostModel = trainAdaboost(X_train, Y_train)
+    adaboostModel = trainAdaboost(np.concatenate((X_train,X_validation),axis=0), np.concatenate((Y_train,Y_validation),axis=0))
     test(adaboostModel, X_test, Y_test)

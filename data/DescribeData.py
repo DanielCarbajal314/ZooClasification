@@ -4,6 +4,15 @@ from matplotlib import pyplot
 import seaborn as sns
 
 
+def describeClases():
+    datafile = pd.read_csv('./data/dataset/zoo.csv')
+    Yvalues = datafile['class_type']
+    percents = ((Yvalues.value_counts() / Yvalues.count())*100).round(2)
+    names = pd.DataFrame(['Unknown','Mammal','Bird','Reptile','Fish','Amphibian','Bug','Invertebrat'],columns=["class_names"])
+    percentTable = pd.concat([names,percents],axis=1)
+    print("=====Unbalanced Data=====")
+    print(percentTable)
+
 def DescribeData():
     sns.set()
     datafile = pd.read_csv('./data/dataset/zoo.csv')

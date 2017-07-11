@@ -18,8 +18,11 @@ def runSVM(X_train,X_test,X_validation,Y_train,Y_test,Y_validation):
     #Pruebas con otros kernels
     #print(Y_validation)
     #print(Y_test)
-    SvmKernelTest(X_train,X_validation,Y_train,Y_validation)
+    #SvmKernelTest(X_train,X_validation,Y_train,Y_validation)
     model = _testSvmGaussian(X_train,X_validation,Y_train,Y_validation)
+    X_trainval =  np.concatenate((X_train,X_validation),axis=0)
+    Y_trainval = np.concatenate((Y_train,Y_validation),axis=0)
+    model.fit(X_trainval,Y_trainval)
     _testSVM(model,X_test,Y_test)
 
 def testModel(model,X_test,Y_test):
